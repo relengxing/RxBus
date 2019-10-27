@@ -80,7 +80,7 @@ PublishSubject：只会把在订阅发生的时间点之后来自原始Observabl
     if (!rxSubscription2.isUnsubscribed()) {    
         rxSubscription2.unsubscribe();
     }
-#支持Sticky事件
+# 支持Sticky事件
 >在Android开发中，Sticky事件只指事件消费者在事件发布之后才注册的也能接收到该事件的特殊类型。Android中就有这样的实例，也就是Sticky Broadcast，即粘性广播。正常情况下如果发送者发送了某个广播，而接收者在这个广播发送后才注册自己的Receiver，这时接收者便无法接收到刚才的广播，为此Android引入了StickyBroadcast，在广播发送结束后会保存刚刚发送的广播（Intent），这样当接收者注册完Receiver后就可以接收到刚才已经发布的广播。这就使得我们可以预先处理一些事件，让有消费者时再把这些事件投递给消费者。
 
 参考：[深入RxBus：［支持Sticky事件］](http://www.jianshu.com/p/71ab00a2677b)
