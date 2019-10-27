@@ -6,17 +6,17 @@ http://www.jianshu.com/p/ca090f6e2fe2
 我这篇基本上就是按照上面那篇写的
 写下来让自己记得更深刻。这篇文章面向有RxJava基础的人，要是HelloWorld都没写过建议先看基础部分。
 
-#步骤
-1. 新建工程
-2. 添加rxjava和rxandroid依赖
-3. 完成以下界面
+# 步骤
+1. 新建工程  
+2. 添加rxjava和rxandroid依赖  
+3. 完成以下界面  
 
-![界面](http://upload-images.jianshu.io/upload_images/2188564-7ecf70697afbb76e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-4. 编写RxBus文件
-5. 编写其他代码
+![界面](http://upload-images.jianshu.io/upload_images/2188564-7ecf70697afbb76e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)  
+4. 编写RxBus文件  
+5. 编写其他代码  
 ***
-RxBus是一个全局使用的总线，应该使用单例模式。
-单例模式的具体写法可以自己研究下。
+RxBus是一个全局使用的总线，应该使用单例模式。  
+单例模式的具体写法可以自己研究下。  
 参考代码：
 http://www.race604.com/java-double-checked-singleton/
 
@@ -34,9 +34,9 @@ http://www.race604.com/java-double-checked-singleton/
             public static final RxBus instance = new RxBus();    
         }
     }
-###事件总线
-那么需要一根总线来传输数据。
-这根总线就是RxJava中的Subject。
+### 事件总线  
+那么需要一根总线来传输数据。  
+这根总线就是RxJava中的Subject。  
 
 >Subject可以看成是一个桥梁或者代理，在某些ReactiveX实现中（ 如RxJava） ，**它同时充当了Observer和Observable的角色**。因为它是一个Observer，它可以订阅一个或多个Observable；又因为它是一个Observable，它可以转发它收到(Observe)的数据，也可以发射新的数据。
 
@@ -68,7 +68,7 @@ PublishSubject：只会把在订阅发生的时间点之后来自原始Observabl
         bus.onNext(object);
     }
 
-###接收事件
+### 接收事件
     public <T> Observable<T> toObservable(Class<T> eventType){ 
        return bus.ofType(eventType);
     }
@@ -99,7 +99,7 @@ PublishSubject：只会把在订阅发生的时间点之后来自原始Observabl
 
 Sticky事件和普通事件使用的是同一个Bus,所以接收者接收的是同一个对象时，当他们都订阅了事件时是没有区别的。
 
-###发送Sticky事件
+### 发送Sticky事件
  这个其实就是在发送普通时间之前把这个事件写入到刚刚的map中去。
 
     public void postSticky(Object object){    
@@ -114,7 +114,7 @@ Sticky事件和普通事件使用的是同一个Bus,所以接收者接收的是�
         post(object);
     }
 
-###接收Sticky事件
+### 接收Sticky事件  
 这个就是先查看map中是否有这个事件，有的话使用.merginWith一起发出来。
 
     public <T> Observable<T> toObservableSticky(final Class<T> eventType){    
